@@ -1,0 +1,213 @@
+<template>
+  <div>
+    <div class="asset">
+      <div class="box-father">
+        <div class="left-box">
+          <div class="left-one">
+            <h2 class="h2-title">资产推介</h2>
+            <p class="more">MORE >></p>
+          </div>
+          <div class="left-two">
+            <div class="left-two-first">
+              <h3>债权资产</h3>
+              <div class="number-one"><span>1000</span>万元</div>
+              <div class="location">江西asdfasdfasdf</div>
+            </div>
+            <div class="left-two-second">
+              <h3>债权资产</h3>
+              <div class="number-one"><span>1000</span>万元</div>
+              <div class="location">江西</div>
+            </div>
+          </div>
+          <div class="arrow">
+            <span>
+              <span class="iconfont icon-xiangzuojiantou"></span>
+            </span>
+            <span>
+              <span class="iconfont icon-xiangyoujiantou"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="mid-box">
+        <div class="the-line"></div>
+      </div>
+      <div class="box-father">
+        <div class="right-box">
+          <div class="right-box-one">
+            <h2 class="h2-title">在拍资产</h2>
+            <p class="more">MORE >></p>
+          </div>
+          <div class="right-box-two"></div>
+          <div class="box-last">
+            <div class="arrow">
+              <span>
+                <span class="iconfont icon-xiangzuojiantou"></span>
+              </span>
+              <span>
+                <span class="iconfont icon-xiangyoujiantou"></span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {};
+</script>
+
+<style scoped>
+.asset {
+  padding: 0 8.5%;
+  background: url('@/assets/image/module_bg.png') no-repeat;
+  background-size: 100% 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.box-father {
+  width: 50%;
+}
+
+.left-box {
+  display: flex;
+  margin: 4% 0;
+}
+
+.mid-box {
+  display: flex;
+  width: 3px;
+  align-items: center;
+}
+
+.the-line {
+  width: 0;
+  height: 120px;
+  border: 1px solid #000;
+  opacity: 0.2;
+}
+
+.left-one {
+  flex: 2;
+  margin-right: 8px;
+}
+
+.left-two {
+  display: flex;
+  justify-content: space-between;
+  flex: 6;
+  height: 234px;
+  /* background-color: #fff; */
+}
+
+.left-two-first {
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.left-two-first:hover {
+  background-color: #f5f5f5;
+}
+
+.left-two-second {
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  cursor: pointer;
+  /* background-color: blue; */
+}
+
+.arrow {
+}
+
+.arrow > span {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 5px 5px;
+  margin-right: 4px;
+  background-color: #e60012;
+  color: #fff;
+  cursor: pointer;
+}
+.right-box {
+  float: left;
+  margin: 28px 0;
+  /* background-color:pink; */
+}
+
+.location {
+  height: 1.5rem;
+  font-size: 1.2rem;
+  font-family: Microsoft YaHei;
+  font-weight: 400;
+  line-height: 1.5rem;
+  margin: 6px 0;
+  margin-right: 45%;
+  color: #333;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.right-box-one {
+  padding: 0 35px;
+}
+
+.right-box > div {
+  float: left;
+}
+
+.right-box-two {
+  padding: 0 175px;
+}
+
+.right-box .box-last {
+  float: right;
+  margin: 0 60px;
+}
+
+.h2-title {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #958167;
+  margin-top: 30px;
+}
+
+.more {
+  font-size: 1rem;
+  width: 80px;
+  font-weight: 400;
+  color: #e60012;
+  margin-top: 102px;
+  cursor: pointer;
+}
+
+.left-box .left-two .left-two-first h3,
+.left-box .left-two .left-two-second h3 {
+  height: 2rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #333;
+  margin-top: 30px;
+}
+
+.number-one {
+  color: #e60012;
+  margin-top: 9px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 19px;
+  font-family: Microsoft YaHei;
+}
+
+.number-one span {
+  font-size: 2.1rem;
+  font-family: Arial;
+  line-height: 42px;
+  font-weight: 700;
+}
+</style>
