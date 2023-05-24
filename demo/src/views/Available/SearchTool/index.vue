@@ -7,22 +7,14 @@
           <el-input type="text" v-model="valueName" size="medium"></el-input>
         </div>
         <div>
-          <label>资产类别</label>
-          <!-- <el-input type="text" v-model="valueType" size="medium"></el-input>
-           -->
-          <el-select
-            v-model="valueCheck"
-            placeholder="请选择资产类别"
-            size="medium"
-            style="margin-right: 10px"
-          >
+          <label>债权抵押物</label>
+          <el-select v-model="checkDebt">
             <el-option
-              v-for="item in valueType"
+              v-for="item in valueDebt"
               :key="item.value"
               :label="item.label"
               :value="item.value"
-            >
-            </el-option>
+            ></el-option>
           </el-select>
         </div>
         <div>
@@ -48,6 +40,40 @@
               :value="item.value"
             ></el-option>
           </el-select> -->
+        </div>
+      </div>
+      <div class="input-box">
+        <div>
+          <label class="">债权本金下限</label>
+          <el-input
+            type="text"
+            v-model="creditRightFareMin"
+            size="medium"
+          ></el-input>
+        </div>
+        <div>
+          <label>债权本金上限</label>
+          <el-input
+            type="text"
+            v-model="creditRightFareMax"
+            size="medium"
+          ></el-input>
+        </div>
+        <div>
+          <label>债权种类</label>
+          <el-select
+            v-model="assetType"
+            placeholder="请选择债权种类"
+            size="medium"
+            style="margin-right: 10px"
+          >
+            <el-option
+              v-for="item in provinces"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
         </div>
       </div>
       <div class="input-botton">
@@ -81,7 +107,11 @@
 </template>
 
 <script>
-import { getProvinces, getValueTypes } from './CityMap/CityMap.js';
+import {
+  getProvinces,
+  getValueDebts,
+  getAssetTypes,
+} from './CityMap/CityMap.js';
 import { getItem } from '@/api/Available/search.js';
 export default {
   data() {
@@ -89,17 +119,24 @@ export default {
       valueName: '',
       provinceCheck: '',
       cityCheck: '',
-      valueCheck: '',
+      checkDebt: '',
+      creditRightFareMin: '',
+      creditRightFareMax: '',
     };
   },
   computed: {
     provinces() {
-      return getProvinces().map((item) => {
-        return { value: `${item}`, label: `${item}` };
+      return getProvinces().map((item, index) => {
+        return { value: `${index}`, label: `${item}` };
       });
     },
-    valueType() {
-      return getValueTypes().map((item, index) => {
+    valueDebt() {
+      return getValueDebts().map((item, index) => {
+        return { value: `${index}`, label: `${item}` };
+      });
+    },
+    assetTypes() {
+      return getAssetTypes().map((item, index) => {
         return { value: `${index}`, label: `${item}` };
       });
     },
@@ -124,11 +161,6 @@ export default {
       getItem();
     },
   },
-  // watch: {
-  //   valueCheck(newVal, OldVal) {
-  //     console.log(newVal, OldVal);
-  //   },
-  // },
 };
 </script>
 

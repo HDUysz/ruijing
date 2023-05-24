@@ -593,9 +593,68 @@ export function getCitiesByProvince(province) {
 }
 
 export function getProvinces() {
-  return [...provinceCityMap.keys()];
+  return [
+    '不限',
+    '黑龙江省',
+    '吉林省',
+    '辽宁省',
+    '河北省',
+    '甘肃省',
+    '青海省',
+    '陕西省',
+    '河南省',
+    '山东省',
+    '山西省',
+    '安徽省',
+    '湖北省',
+    '湖南省',
+    '江苏省',
+    '四川省',
+    '贵州省',
+    '云南省',
+    '浙江省',
+    '江西省',
+    '广东省',
+    '福建省',
+    '台湾省',
+    '海南省',
+    '内蒙古',
+    '宁夏',
+    '广西',
+    '西藏',
+    '北京市',
+    '上海市',
+    '天津市',
+    '重庆市',
+    '香港',
+    '澳门',
+  ];
 }
 
 export function getValueTypes() {
   return ['非重点推荐', '重点推介'];
+}
+
+export function getValueDebts() {
+  return [
+    '不限',
+    '光地(工业)',
+    '光地(商业)',
+    '光地(商住)',
+    '工业房产地',
+    '住宅',
+    '商业',
+    '办公楼',
+    '在建工程',
+    '机械设备',
+    '林权',
+    '大宗物资',
+    '运输设备',
+    '生产用设',
+    '股权',
+  ];
+}
+
+export function getAssetTypes() {
+  return ['不限', '金融债权', '非金融债权'];
 }
