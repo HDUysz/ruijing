@@ -4,19 +4,25 @@
       <div class="box-father">
         <div class="left-box">
           <div class="left-one">
-            <h2 class="h2-title">资产推介</h2>
+            <h2 class="h2-title">重点推介资产</h2>
             <p class="more">MORE >></p>
           </div>
           <div class="left-two">
-            <div class="left-two-first">
-              <h3>债权资产</h3>
-              <div class="number-one"><span>1000</span>万元</div>
-              <div class="location">江西asdfasdfasdf</div>
+            <div class="left-two-first" @click="checkDetil(showAsset[0].id)">
+              <h3>{{ showAsset[0].Name }}</h3>
+              <div class="number-one">
+                <span>{{ showAsset[0].Fare }}</span
+                >万元
+              </div>
+              <div class="location">{{ showAsset[0].province }}</div>
             </div>
-            <div class="left-two-second">
-              <h3>债权资产</h3>
-              <div class="number-one"><span>1000</span>万元</div>
-              <div class="location">江西</div>
+            <div class="left-two-second" @click="checkDetil(showAsset[1].id)">
+              <h3>{{ showAsset[1].Name }}</h3>
+              <div class="number-one">
+                <span>{{ showAsset[1].Fare }}</span
+                >万元
+              </div>
+              <div class="location">{{ showAsset[1].location }}</div>
             </div>
           </div>
           <div class="arrow">
@@ -35,7 +41,7 @@
       <div class="box-father">
         <div class="right-box">
           <div class="right-box-one">
-            <h2 class="h2-title">在拍资产</h2>
+            <h2 class="h2-title">拟处置资产</h2>
             <p class="more">MORE >></p>
           </div>
           <div class="right-box-two"></div>
@@ -56,7 +62,45 @@
 </template>
 
 <script>
-export default {};
+import { getAssetList } from '@/api/Home/asset';
+export default {
+  data() {
+    return {
+      importantAsset: [],
+      unimportantAsset: [],
+      showIndex: 1,
+    };
+  },
+  created() {
+    getAssetList().then((res) => {
+      this.importantAsset = res.data.data[0];
+      this.unimportantAsset = res.data.data[1];
+    });
+  },
+  computed: {
+    showAsset() {
+      return this.importantAsset
+        .map((item) => {
+          return {
+            id: item.id,
+            Name: item.assetName,
+            Fare: `${item.creditRightFare / 1000}`,
+            province: item.provinceString,
+            collection: item.collection,
+            click: item.click,
+          };
+        })
+        .filter((item, index) => {
+          return index <= this.showIndex && index >= this.showIndex - 1;
+        });
+    },
+  },
+  methods: {
+    checkDetil(id) {
+      this.$router.push(`/available/${id}`);
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -111,7 +155,7 @@ export default {};
 }
 
 .left-two-first:hover {
-  background-color: #f5f5f5;
+  background-color: rgb(255, 255, 255);
 }
 
 .left-two-second {
@@ -120,6 +164,10 @@ export default {};
   flex-direction: column;
   cursor: pointer;
   /* background-color: blue; */
+}
+
+.left-two-second:hover {
+  background-color: rgb(255, 255, 255);
 }
 
 .arrow {

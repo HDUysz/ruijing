@@ -28,8 +28,15 @@
 
 <script>
 import { getAvailableList } from '@/api/Available/list.js';
+import { EventBus } from '../event-bus';
 import PageButton from '../PageButton/index.vue';
 export default {
+  props: {
+    recommand: {
+      type: Number,
+      default: 2,
+    },
+  },
   components: {
     PageButton,
   },
@@ -60,6 +67,7 @@ export default {
   created() {
     getAvailableList(this.recommand, this.initialPage).then((res) => {
       this.resData = { ...res.data.data };
+      EventBus.$emit('list-event', { listData: this.resData });
     });
   },
   watch: {
@@ -67,6 +75,7 @@ export default {
       handler() {
         getAvailableList(this.recommand, this.resData.currPage).then((res) => {
           this.resData = { ...res.data.data };
+          EventBus.$emit('list-event', this.resData);
         });
       },
     },

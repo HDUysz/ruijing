@@ -31,7 +31,7 @@ const routes = [
     component: () => import('../views/Jobs/index.vue'),
   },
   {
-    path: '/available',
+    path: '/available/:id?',
     name: 'available',
     component: () => import('../views/Available/index.vue'),
   },

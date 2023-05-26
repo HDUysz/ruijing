@@ -4,11 +4,15 @@
       <div class="input-box">
         <div>
           <label>资产名称</label>
-          <el-input type="text" v-model="valueName" size="medium"></el-input>
+          <el-input
+            type="text"
+            v-model="queryInfo.valueName"
+            size="medium"
+          ></el-input>
         </div>
         <div>
           <label>债权抵押物</label>
-          <el-select v-model="checkDebt">
+          <el-select v-model="queryInfo.checkDebt" multiple collapse-tags>
             <el-option
               v-for="item in valueDebt"
               :key="item.value"
@@ -20,10 +24,12 @@
         <div>
           <label style="width: 30%">地区</label>
           <el-select
-            v-model="provinceCheck"
+            v-model="queryInfo.provinceCheck"
             placeholder="请选择省份"
             size="medium"
             style="margin-right: 10px"
+            multiple
+            collapse-tags
           >
             <el-option
               v-for="item in provinces"
@@ -44,31 +50,31 @@
       </div>
       <div class="input-box">
         <div>
-          <label class="">债权本金下限</label>
+          <label style="width: 50%">债权本金下限</label>
           <el-input
             type="text"
-            v-model="creditRightFareMin"
+            v-model="queryInfo.creditRightFareMin"
             size="medium"
           ></el-input>
         </div>
         <div>
-          <label>债权本金上限</label>
+          <label style="width: 50%">债权本金上限</label>
           <el-input
             type="text"
-            v-model="creditRightFareMax"
+            v-model="queryInfo.creditRightFareMax"
             size="medium"
           ></el-input>
         </div>
         <div>
           <label>债权种类</label>
           <el-select
-            v-model="assetType"
+            v-model="queryInfo.assetCheck"
             placeholder="请选择债权种类"
             size="medium"
             style="margin-right: 10px"
           >
             <el-option
-              v-for="item in provinces"
+              v-for="item in assetTypes"
               :key="item.value"
               :label="item.label"
               :value="item.value"
@@ -113,32 +119,31 @@ import {
   getAssetTypes,
 } from './CityMap/CityMap.js';
 import { getItem } from '@/api/Available/search.js';
+import { EventBus } from '../event-bus';
 export default {
   data() {
     return {
-      valueName: '',
-      provinceCheck: '',
-      cityCheck: '',
-      checkDebt: '',
-      creditRightFareMin: '',
-      creditRightFareMax: '',
+      queryInfo: {
+        valueName: '',
+        provinceCheck: '',
+        cityCheck: '',
+        checkDebt: '',
+        assetCheck: '',
+        creditRightFareMin: '',
+        creditRightFareMax: '',
+      },
+      listData: {},
     };
   },
   computed: {
     provinces() {
-      return getProvinces().map((item, index) => {
-        return { value: `${index}`, label: `${item}` };
-      });
+      return this.mapToValueLabel(getProvinces);
     },
     valueDebt() {
-      return getValueDebts().map((item, index) => {
-        return { value: `${index}`, label: `${item}` };
-      });
+      return this.mapToValueLabel(getValueDebts);
     },
     assetTypes() {
-      return getAssetTypes().map((item, index) => {
-        return { value: `${index}`, label: `${item}` };
-      });
+      return this.mapToValueLabel(getAssetTypes);
     },
     // cities() {
     //   return getCitiesByProvince(this.provinceCheck).map((item) => {
@@ -149,18 +154,34 @@ export default {
   methods: {
     searchItem() {
       //查询
-      getItem();
+      EventBus.$on('list-even', (data) => {
+        this.listData = data;
+      });
+      getItem(this.queryInfo);
     },
     resetForm() {
       //重置表单
-      this.valueName = '';
-      this.valueType = '';
-      this.provinceCheck = '';
-      this.cityCheck = '';
+      for (let key in this.queryInfo) {
+        this.queryInfo[key] = '';
+      }
       //重新申请第一页的内容
       getItem();
     },
+    mapToValueLabel(fn) {
+      return fn().map((item, index) => {
+        return { value: `${index}`, label: `${item}` };
+      });
+    },
   },
+  // watch: {
+  //   queryInfo: {
+  //     handler(newVal, oldVal) {
+  //       //监听表单的变化
+  //       console.log(newVal, oldVal);
+  //     },
+  //     deep: true,
+  //   },
+  // },
 };
 </script>
 

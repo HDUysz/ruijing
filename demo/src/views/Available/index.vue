@@ -13,7 +13,7 @@
     ></customertab>
     <Layout>
       <SearchTool></SearchTool>
-      <List></List>
+      <List v-if="!id"></List>
     </Layout>
     <Footer></Footer>
   </div>
@@ -46,6 +46,10 @@ export default {
         { text: '在拍资产' },
       ],
     };
+  },
+  created() {
+    console.log(this.$route.params.id);
+    this.id = this.$route.params.id || '';
   },
 };
 </script>

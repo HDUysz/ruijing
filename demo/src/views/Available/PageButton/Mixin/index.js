@@ -15,7 +15,6 @@ export default {
   },
   data() {
     return {
-      recommand: 2,
       initialPage: 1,
       jumpPage: '',
     };
