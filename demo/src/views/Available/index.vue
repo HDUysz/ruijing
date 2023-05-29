@@ -12,8 +12,9 @@
       :activeTab.sync="activeTab"
     ></customertab>
     <Layout>
-      <SearchTool></SearchTool>
+      <SearchTool v-if="!id"></SearchTool>
       <List v-if="!id"></List>
+      <AssetShow v-if="id" :id="id"></AssetShow>
     </Layout>
     <Footer></Footer>
   </div>
@@ -27,6 +28,7 @@ import customertab from '../components/CustomerTab/index.vue';
 import Layout from '../components/Layout/index.vue';
 import SearchTool from './SearchTool/index.vue';
 import List from './List/index.vue';
+import AssetShow from './AssetShow/index.vue';
 export default {
   components: {
     Header,
@@ -36,20 +38,17 @@ export default {
     Layout,
     SearchTool,
     List,
+    AssetShow,
   },
   data() {
     return {
       activeTab: 0,
-      tabItems: [
-        { text: '推介信息' },
-        { text: '处置公告' },
-        { text: '在拍资产' },
-      ],
+      tabItems: [{ text: '推介信息' }],
     };
   },
   created() {
     console.log(this.$route.params.id);
-    this.id = this.$route.params.id || '';
+    this.id = this.$route.params.id || 1;
   },
 };
 </script>

@@ -75,13 +75,18 @@ export default {
       }
     },
     prevPage() {
-      this.cpuPage = this.cpuPage - 1;
+      this.cpuPage = this.cpuPage > 1 ? this.cpuPage - 1 : 1;
     },
     nextPage() {
-      this.cpuPage = this.cpuPage + 1;
+      this.cpuPage =
+        this.cpuPage < this.totalPage ? this.cpuPage + 1 : this.totalPage;
     },
     jumpToPage(jumpPage) {
       var page = parseInt(jumpPage);
+      if (isNaN(page)) {
+        this.$message.error('请输入正确的页码');
+        return;
+      }
       if (page > this.totalPage || page < 1) {
         this.$message.error('请输入正确的页码');
       } else {

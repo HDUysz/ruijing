@@ -6,13 +6,13 @@
           <label>资产名称</label>
           <el-input
             type="text"
-            v-model="queryInfo.valueName"
+            v-model="queryInfo.key"
             size="medium"
           ></el-input>
         </div>
         <div>
           <label>债权抵押物</label>
-          <el-select v-model="queryInfo.checkDebt" multiple collapse-tags>
+          <el-select v-model="queryInfo.collateralType" multiple collapse-tags>
             <el-option
               v-for="item in valueDebt"
               :key="item.value"
@@ -24,7 +24,7 @@
         <div>
           <label style="width: 30%">地区</label>
           <el-select
-            v-model="queryInfo.provinceCheck"
+            v-model="queryInfo.province"
             placeholder="请选择省份"
             size="medium"
             style="margin-right: 10px"
@@ -68,7 +68,7 @@
         <div>
           <label>债权种类</label>
           <el-select
-            v-model="queryInfo.assetCheck"
+            v-model="queryInfo.assetType"
             placeholder="请选择债权种类"
             size="medium"
             style="margin-right: 10px"
@@ -118,21 +118,18 @@ import {
   getValueDebts,
   getAssetTypes,
 } from './CityMap/CityMap.js';
-import { getItem } from '@/api/Available/search.js';
 import { EventBus } from '../event-bus';
 export default {
   data() {
     return {
       queryInfo: {
-        valueName: '',
-        provinceCheck: '',
-        cityCheck: '',
-        checkDebt: '',
-        assetCheck: '',
+        key: '',
+        province: '',
+        collateralType: '',
+        assetType: '',
         creditRightFareMin: '',
         creditRightFareMax: '',
       },
-      listData: {},
     };
   },
   computed: {
@@ -153,19 +150,14 @@ export default {
   },
   methods: {
     searchItem() {
-      //查询
-      EventBus.$on('list-even', (data) => {
-        this.listData = data;
-      });
-      getItem(this.queryInfo);
+      const transformQueryInfo = this.queryInfo;
+      EventBus.$emit('searchItem', transformQueryInfo);
     },
     resetForm() {
       //重置表单
       for (let key in this.queryInfo) {
         this.queryInfo[key] = '';
       }
-      //重新申请第一页的内容
-      getItem();
     },
     mapToValueLabel(fn) {
       return fn().map((item, index) => {

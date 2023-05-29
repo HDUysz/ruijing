@@ -1,7 +1,13 @@
 <template>
   <div>
     <el-table :data="resData.list" size="medium">
-      <el-table-column prop="assetName" label="名称"></el-table-column>
+      <el-table-column prop="assetName" label="名称">
+        <template slot-scope="scope">
+          <div class="article-title" @click="viewArticle(scope.row.id)">
+            {{ scope.row.assetName }}
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column
         prop="creditRightFare"
         label="金额(万元)"
@@ -29,6 +35,7 @@
 <script>
 import { getAvailableList } from '@/api/Available/list.js';
 import { EventBus } from '../event-bus';
+import { getItem } from '@/api/Available/search';
 import PageButton from '../PageButton/index.vue';
 export default {
   props: {
@@ -62,22 +69,46 @@ export default {
         totalPage: 10,
         currPage: 1,
       },
+      searchInfo: {},
     };
   },
+  methods: {
+    viewArticle(id) {
+      this.$router.push({
+        path: `/available/${id}`,
+      });
+    },
+  },
   created() {
+    //查询所有资产的方法
     getAvailableList(this.recommand, this.initialPage).then((res) => {
       this.resData = { ...res.data.data };
-      EventBus.$emit('list-event', { listData: this.resData });
     });
+    EventBus.$on('searchItem', (data) => {
+      console.log('调用了这个方法');
+      this.searchInfo = data;
+      //调用查询分页的方法
+      getItem(this.searchInfo, 1).then((res) => {
+        this.resData = { ...res.data.data.page };
+      });
+    });
+  },
+  beforeDestroy() {
+    EventBus.$off('search');
   },
   watch: {
     'resData.currPage': {
       handler() {
         getAvailableList(this.recommand, this.resData.currPage).then((res) => {
           this.resData = { ...res.data.data };
-          EventBus.$emit('list-event', this.resData);
         });
       },
+    },
+    searchInfo: {
+      handler(newVal, oldVal) {
+        console.log(newVal, oldVal);
+      },
+      deep: true,
     },
   },
 };
@@ -99,5 +130,13 @@ export default {
 
 .el-table thead {
   color: #333 !important;
+}
+
+.article-title {
+  cursor: pointer;
+}
+
+.article-title:hover {
+  color: rgb(0, 86, 179);
 }
 </style>
