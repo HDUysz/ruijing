@@ -11,7 +11,8 @@
       <el-table-column
         prop="creditRightFare"
         label="金额(万元)"
-        width="300"
+        width="200"
+        :formatter="formatCurrency"
       ></el-table-column>
       <el-table-column
         prop="provinceString"
@@ -70,18 +71,30 @@ export default {
         currPage: 1,
       },
       searchInfo: {},
+      initialPage: 1,
     };
   },
   methods: {
     viewArticle(id) {
-      this.$router.push({
-        path: `/available/${id}`,
-      });
+      console.log('调用了viewArticle方法');
+      const pid = parseInt(id);
+      // 判断当前的 id 是否已经等于要跳转的 id
+      this.$router.push({ path: `/available/${pid}` });
+    },
+    formatCurrency(row) {
+      const amount = row.creditRightFare;
+      if (amount === null || amount === undefined) {
+        return '';
+      }
+
+      const formattedAmount = (amount / 10000).toFixed(2);
+      return formattedAmount;
     },
   },
   created() {
     //查询所有资产的方法
     getAvailableList(this.recommand, this.initialPage).then((res) => {
+      console.log('调用了List的方法', res.data);
       this.resData = { ...res.data.data };
     });
     EventBus.$on('searchItem', (data) => {
@@ -89,6 +102,8 @@ export default {
       this.searchInfo = data;
       //调用查询分页的方法
       getItem(this.searchInfo, 1).then((res) => {
+        console.log(this.searchInfo);
+        console.log('调用了getItem的方法,并且返回了', res);
         this.resData = { ...res.data.data.page };
       });
     });

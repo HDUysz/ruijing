@@ -44,11 +44,18 @@ export default {
     return {
       activeTab: 0,
       tabItems: [{ text: '推介信息' }],
+      id: null,
     };
   },
   created() {
-    console.log(this.$route.params.id);
-    this.id = this.$route.params.id || 1;
+    this.id = parseInt(this.$route.params.id) || null;
+  },
+  beforeRouteUpdate(to, from, next) {
+    console.log(from, to);
+    if (to.name === 'available') {
+      this.id = parseInt(to.params.id);
+    }
+    next();
   },
 };
 </script>
