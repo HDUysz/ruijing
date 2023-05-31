@@ -93,6 +93,12 @@ export default {
         this.cpuPage = page;
       }
     },
+    prevDisabled() {
+      return this.cpuPage === 1;
+    },
+    nextDisabled() {
+      return this.cpuPage === this.totalPage;
+    },
   },
   //   watch: {
   //     cpuPage() {

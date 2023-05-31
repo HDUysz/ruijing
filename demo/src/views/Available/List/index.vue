@@ -72,6 +72,7 @@ export default {
       },
       searchInfo: {},
       initialPage: 1,
+      homeRecommand: null,
     };
   },
   methods: {
@@ -93,7 +94,9 @@ export default {
   },
   created() {
     //查询所有资产的方法
-    getAvailableList(this.recommand, this.initialPage).then((res) => {
+    this.homeRecommand = this.$route.params.recommand || this.recommand;
+    console.log('路由中的参数是:', this.$route.params.recommand);
+    getAvailableList(this.homeRecommand, this.initialPage).then((res) => {
       console.log('调用了List的方法', res.data);
       this.resData = { ...res.data.data };
     });
@@ -114,9 +117,11 @@ export default {
   watch: {
     'resData.currPage': {
       handler() {
-        getAvailableList(this.recommand, this.resData.currPage).then((res) => {
-          this.resData = { ...res.data.data };
-        });
+        getAvailableList(this.homeRecommand, this.resData.currPage).then(
+          (res) => {
+            this.resData = { ...res.data.data };
+          }
+        );
       },
     },
     searchInfo: {
@@ -136,7 +141,7 @@ export default {
 }
 
 .el-table th {
-  background-color: #f3f3f3 !important;
+  background-color: #f7f7f7 !important;
 }
 
 .el-table tr :first-child {

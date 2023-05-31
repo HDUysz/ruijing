@@ -7,6 +7,7 @@
           size="small"
           icon="el-icon-arrow-left"
           class="page-button"
+          :disabled="prevDisabled()"
           @click="prevPage"
           >上一页</el-button
         >
@@ -27,6 +28,7 @@
           size="small"
           icon="el-icon-arrow-right"
           class="page-button"
+          :disabled="nextDisabled()"
           @click="nextPage"
           >下一页</el-button
         >
@@ -106,6 +108,18 @@ export default {
 .el-input {
   width: 3.5rem;
   margin: 0 0.3rem;
+}
+
+::v-deep .el-button[disabled] {
+  background-color: #fff;
+  border-color: #d9d9d9;
+  color: #d9d9d9;
+}
+
+::v-deep .el-button[disabled]:hover {
+  background-color: #fff;
+  border-color: #d9d9d9;
+  color: #d9d9d9;
 }
 
 #jump {

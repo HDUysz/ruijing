@@ -5,7 +5,7 @@
         <div class="left-box">
           <div class="left-one">
             <h2 class="h2-title">重点推介资产</h2>
-            <p class="more" @click="goToAsset">MORE >></p>
+            <p class="more" @click="goToAsset(1)">MORE >></p>
           </div>
           <div class="left-two">
             <div class="left-two-first" @click="checkDetil(showAsset[0].id)">
@@ -55,7 +55,7 @@
         <div class="left-box">
           <div class="left-one">
             <h2 class="h2-title">非重点推介资产</h2>
-            <p class="more">MORE >></p>
+            <p class="more" @click="goToAsset(0)">MORE >></p>
           </div>
           <div class="left-two">
             <div class="left-two-first" @click="checkDetil(showUnAsset[0].id)">
@@ -191,11 +191,11 @@ export default {
         this.unShowIndex = 1;
       }
     },
-    goToAsset() {
+    goToAsset(recommand) {
       this.$router.push({
-        path: '/Available',
+        name: 'available',
         params: {
-          recommand: 1,
+          recommand,
         },
       });
     },
