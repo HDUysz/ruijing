@@ -6,5 +6,8 @@ export function getItem(queryInfo, page) {
     url: `http://139.9.113.73/asset/condition/${page}`,
     method: 'post',
     data: queryInfo,
+    metaData: {
+      isSearch: true,
+    },
   });
 }

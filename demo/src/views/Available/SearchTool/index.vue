@@ -38,14 +38,6 @@
               :value="item.value"
             ></el-option>
           </el-select>
-          <!-- <el-select v-model="cityCheck" placeholder="请选择城市" size="medium">
-            <el-option
-              v-for="item in cities"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select> -->
         </div>
       </div>
       <div class="input-box">
@@ -124,9 +116,9 @@ export default {
     return {
       queryInfo: {
         key: '',
-        province: '',
-        collateralType: '',
-        assetType: '',
+        province: [],
+        collateralType: [],
+        assetType: 0,
         creditRightFareMin: '',
         creditRightFareMax: '',
       },
@@ -142,11 +134,6 @@ export default {
     assetTypes() {
       return this.mapToValueLabel(getAssetTypes);
     },
-    // cities() {
-    //   return getCitiesByProvince(this.provinceCheck).map((item) => {
-    //     return { value: `${item}`, label: `${item}` };
-    //   });
-    // },
   },
   methods: {
     searchItem() {
@@ -155,13 +142,17 @@ export default {
     },
     resetForm() {
       //重置表单
-      for (let key in this.queryInfo) {
-        this.queryInfo[key] = '';
-      }
+      this.queryInfo['key'] = '';
+      this.queryInfo['creditRightFareMin'] = '';
+      this.queryInfo['creditRightFareMax'] = '';
+      this.queryInfo['assetType'] = 0;
+      this.queryInfo['province'] = [];
+      this.queryInfo['collateralType'] = [];
+      EventBus.$emit('searchItem', this.queryInfo);
     },
     mapToValueLabel(fn) {
       return fn().map((item, index) => {
-        return { value: `${index}`, label: `${item}` };
+        return { value: index, label: `${item}` };
       });
     },
   },

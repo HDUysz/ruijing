@@ -631,6 +631,13 @@ export function getProvinces() {
   ];
 }
 
+export function mapProvinces() {
+  return getProvinces().reduce((map, province, index) => {
+    map[index] = province;
+    return map;
+  }, {});
+}
+
 export function getValueTypes() {
   return ['非重点推荐', '重点推介'];
 }

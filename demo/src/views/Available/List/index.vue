@@ -15,9 +15,10 @@
         :formatter="formatCurrency"
       ></el-table-column>
       <el-table-column
-        prop="provinceString"
+        prop="province"
         label="地区"
         width="200"
+        :formatter="formatProvince"
       ></el-table-column>
       <el-table-column
         prop="startTime"
@@ -34,6 +35,7 @@
 </template>
 
 <script>
+import { mapProvinces } from '../SearchTool/CityMap/CityMap';
 import { getAvailableList } from '@/api/Available/list.js';
 import { EventBus } from '../event-bus';
 import { getItem } from '@/api/Available/search';
@@ -90,6 +92,10 @@ export default {
 
       const formattedAmount = (amount / 10000).toFixed(2);
       return formattedAmount;
+    },
+    formatProvince(row) {
+      const prov = mapProvinces()[`${row.province}`];
+      return prov;
     },
   },
   created() {

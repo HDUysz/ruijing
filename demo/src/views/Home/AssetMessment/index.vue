@@ -54,7 +54,7 @@
       <div class="box-father">
         <div class="left-box">
           <div class="left-one">
-            <h2 class="h2-title">非重点推介资产</h2>
+            <h2 class="h2-title">拟处置资产</h2>
             <p class="more" @click="goToAsset(0)">MORE >></p>
           </div>
           <div class="left-two">
